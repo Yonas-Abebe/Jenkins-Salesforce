@@ -12,6 +12,13 @@ http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/cu
 		<salesforce:query doc:id="a0a2cf3c-9ffe-4d2f-90d8-1cd5d7556d86" config-ref="Salesforce_Config" doc:name="From salesforce">
 			<salesforce:salesforce-query><![CDATA[SELECT FirstName, LastName, Email, Phone FROM Contact limit 40]]></salesforce:salesforce-query>
 		</salesforce:query>
-		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="d55fb69c-f707-4792-be48-7100c82712e8" />
+		<ee:transform doc:name="Transform" doc:id="d395833e-36fe-4ea9-a9e8-15c95547d8fc">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
 	</flow>
 </mule>
