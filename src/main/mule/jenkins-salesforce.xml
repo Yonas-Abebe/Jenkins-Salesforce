@@ -7,18 +7,11 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
-	<flow name="jenkins-salesforceFlow" doc:id="4e057286-47d9-4fe7-a0c6-beb38e8fcc23" >
+	<flow name="jenkins-salesforce" doc:id="4e057286-47d9-4fe7-a0c6-beb38e8fcc23" >
 		<http:listener doc:name="Listener" doc:id="cdaf70fe-a769-4952-b12c-02e8be980231" path="/jenkins3" config-ref="HTTP_Listener_config"/>
 		<salesforce:query doc:id="a0a2cf3c-9ffe-4d2f-90d8-1cd5d7556d86" config-ref="Salesforce_Config" doc:name="From salesforce">
 			<salesforce:salesforce-query><![CDATA[SELECT FirstName, LastName, Email, Phone FROM Contact limit 40]]></salesforce:salesforce-query>
 		</salesforce:query>
-		<ee:transform doc:name="Transform" doc:id="d395833e-36fe-4ea9-a9e8-15c95547d8fc" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
-output application/json
----
-payload ]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="d55fb69c-f707-4792-be48-7100c82712e8" />
 	</flow>
 </mule>
